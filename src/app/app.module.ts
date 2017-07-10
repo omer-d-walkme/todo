@@ -8,25 +8,11 @@ import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 import { TodosInMemoryWebApi } from './todos-in-memory-web-api';
 import { AppComponent } from './app.component';
 import { TodosService } from './todos.service';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoComponent } from './todo/todo.component';
-import { AddTodoComponent } from './add-todo/add-todo.component';
-import { FilterLinkComponent } from './filter-link/filter-link.component';
-import { TodoFiltersComponent } from './todo-filters/todo-filters.component';
 import { TodosVisibilityService } from './todos-visibility.service';
-import { LinkComponent } from './link/link.component';
-import { VisibleTodoListComponent } from './visible-todo-list/visible-todo-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TodoListComponent,
-    TodoComponent,
-    AddTodoComponent,
-    FilterLinkComponent,
-    TodoFiltersComponent,
-    LinkComponent,
-    VisibleTodoListComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
