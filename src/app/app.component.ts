@@ -1,25 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TodosService } from "app/todos.service";
 import { Todo } from "app/todo";
 import { Observable } from "rxjs/Observable";
 import { TodosVisibilityService } from "app/todos-visibility.service";
-import { Subscription } from "rxjs/Subscription";
 
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   newTodo: Todo;
   visibleTodos: Observable<Todo[]>;
-  currentFilter: string;
 
   private _allTodos: Todo[];
-  private _currentFilterSubscription: Subscription;
 
   constructor(
     private todosService: TodosService,
@@ -30,29 +26,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.visibleTodos = Observable
-      .merge(this.todosService.getAll(), this.todosVisibilityService.getFilter())
-      .map(update => {
-        if (update instanceof Array) {
-          this._allTodos = update;
-        }
-        
-        return this.todosVisibilityService.filterTodos(this._allTodos);
-      });
-    
-      this._currentFilterSubscription = this
-        .todosVisibilityService
-        .getFilter()
-        .subscribe(filter => this.currentFilter = filter);
-  }
-
-  ngOnDestroy() {
-    this._currentFilterSubscription.unsubscribe();
+      .combineLatest(
+        this.todosService.getAll(),
+        this.todosVisibilityService.getFilter(),
+        (todos, filter) => this.todosVisibilityService.filterTodos(todos)
+      );
   }
 
   addTodo() {
-    this.todosService.createTodo(this.newTodo).then(() => {
-      this.newTodo = {};
-    });
+    this
+      .todosService
+      .createTodo(this.newTodo)
+      .then(() => this.newTodo = {});
   }
 
   toggleTodo(todoId: number) {
@@ -64,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   isFilterSelected(filter: string): boolean {
-    return this.currentFilter == filter;
+    return this.todosVisibilityService.isFilterSelected(filter);
   }
 
   applyFilter(filter: string) {

@@ -3,7 +3,7 @@
       <input [(ngModel)]="newTodo.text" name="todoText" />
       <button type="submit" (click)="addTodo()">Add</button>
     </form>
-    <ul>
+    <ul class="todo-filter-list">
       <li>
         <div>
             <span *ngIf="isFilterSelected('all')">All</span>
