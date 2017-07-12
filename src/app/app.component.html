@@ -1,37 +1,27 @@
 <div>
-    <form>
-      <input [(ngModel)]="newTodo.text" name="todoText" />
-      <button type="submit" (click)="addTodo()">Add</button>
-    </form>
+    <app-edit-todo [todo]="newTodo" (saveClicked)="addTodo()"></app-edit-todo>
     <ul class="todo-filter-list">
       <li>
-        <div>
-            <span *ngIf="isFilterSelected('all')">All</span>
-            <span *ngIf="!isFilterSelected('all')">
-                <a href (click)="$event.preventDefault(); applyFilter('all')">All</a>
-            </span>
-        </div>
+        <app-filter-link
+          displayName="All"
+          [isSelected]="isFilterSelected('all')"
+          (filterSelected)="applyFilter('all')">
+        </app-filter-link>
       </li>
       <li>
-        <div>
-            <span *ngIf="isFilterSelected('open')">Open</span>
-            <span *ngIf="!isFilterSelected('open')">
-                <a href (click)="$event.preventDefault(); applyFilter('open')">Open</a>
-            </span>
-        </div>
+        <app-filter-link
+          displayName="Open"
+          [isSelected]="isFilterSelected('open')"
+          (filterSelected)="applyFilter('open')">
+        </app-filter-link>
       </li>
       <li>
-        <div>
-            <span *ngIf="isFilterSelected('completed')">Completed</span>
-            <span *ngIf="!isFilterSelected('completed')">
-                <a href (click)="$event.preventDefault(); applyFilter('completed')">Completed</a>
-            </span>
-        </div>
+        <app-filter-link
+          displayName="Completed"
+          [isSelected]="isFilterSelected('completed')"
+          (filterSelected)="applyFilter('completed')">
+        </app-filter-link>
       </li>
     </ul>
-    <ul>
-      <li *ngFor="let todo of visibleTodos | async">
-        <span (click)="toggleTodo(todo.id)" [style.text-decoration]="getTodoTextDecoration(todo)">{{todo.text}}</span>
-      </li>
-    </ul>
+    <app-todo-list [todos]="visibleTodos | async" (todoClicked)="toggleTodo($event)"></app-todo-list>
 </div>

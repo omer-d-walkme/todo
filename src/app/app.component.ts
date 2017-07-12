@@ -44,10 +44,6 @@ export class AppComponent implements OnInit {
     this.todosService.toggleTodo(todoId);
   }
 
-  getTodoTextDecoration(todo: Todo) {
-    return todo.completed ? 'line-through' : 'none';
-  }
-
   isFilterSelected(filter: string): boolean {
     return this.todosVisibilityService.isFilterSelected(filter);
   }

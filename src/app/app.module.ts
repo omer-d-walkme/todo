@@ -9,10 +9,20 @@ import { TodosInMemoryWebApi } from './todos-in-memory-web-api';
 import { AppComponent } from './app.component';
 import { TodosService } from './todos.service';
 import { TodosVisibilityService } from './todos-visibility.service';
+import { TodoComponent } from './todo/todo.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
+import { EditTodoComponent } from './edit-todo/edit-todo.component';
+import { LinkComponent } from './link/link.component';
+import { FilterLinkComponent } from './filter-link/filter-link.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodoComponent,
+    TodoListComponent,
+    EditTodoComponent,
+    LinkComponent,
+    FilterLinkComponent
   ],
   imports: [
     BrowserModule,
